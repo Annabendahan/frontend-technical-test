@@ -9,12 +9,16 @@ import axios from "axios";
 
 export default function Conversations() {
 
+    const userId = getLoggedUserId()
     const [data, setData] = useState(null);
-    const [conv, setConv] = useState(null);
+    const [messages, setMessages] = useState(null);
+    const [value, setValue] = useState('');
+    const [senderId, setSenderId] = useState(null);
     const [sender, setSender] = useState(null);
     const [isLoading, setLoading] = useState(false);
-    const userId = getLoggedUserId()
-    const [user, setUser] = useState(null);
+    const [convId, setConvId] = useState(null);
+
+    console.log(value)
 
 
     useEffect(() => {
@@ -23,31 +27,24 @@ export default function Conversations() {
             method: 'GET',
             headers: {
             },
-
         })
             .then((res) => res.json())
             .then((data) => {
                 setData(data);
+                setConvId(data[0].id);
+                getMessages(data[0].id, data[0].senderId);
+                getSender(data[0].senderId)
                 setLoading(false);
-                console.log(`data ${data}`)
+                console.log(data[0].senderId)
+                console.log(sender)
             });
-
     }, []);
 
-    const getConv = (id, senderId) => {
-        fetch(`http://localhost:3005/messages/${id}`, {
-            method: 'GET',
-            headers: {
-            },
 
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setConv(data);
-                setLoading(false);
-                console.log(conv)
-            });
-        fetch(`http://localhost:3005/users/${senderId}`, {
+
+
+    const getSender = (senderId) => {
+        fetch(`http://localhost:3005/user/${senderId}`, {
             method: 'GET',
             headers: {
             },
@@ -59,7 +56,15 @@ export default function Conversations() {
                 setLoading(false);
                 console.log(sender)
             });
-        fetch(`http://localhost:3005/user/${userId}`, {
+    }
+
+
+
+    const getMessages = (id, senderId) => {
+        setConvId(id);
+        setSenderId(senderId);
+        getSender(senderId);
+        fetch(`http://localhost:3005/messages/${id}`, {
             method: 'GET',
             headers: {
             },
@@ -67,24 +72,23 @@ export default function Conversations() {
         })
             .then((res) => res.json())
             .then((data) => {
-                setUser(data);
+                setMessages(data);
                 setLoading(false);
-                console.log(`user ${user}`)
+                console.log(messages)
             });
-
-
     }
 
 
 
-    const writeMessage = (message, id) => {
+    const writeMessage = (event, message, id) => {
+        event.preventDefault();
         fetch(`http://localhost:3005/messages/${id}`, {
             // Adding method type
             method: "POST",
 
             // Adding body or contents to send
             body: JSON.stringify({
-                body: "NOUVEAY mEGSG",
+                body: message,
                 userId: 2
             }),
 
@@ -125,6 +129,13 @@ export default function Conversations() {
     }
 
 
+    const getDate = (timestamp) => {
+        let date = new Date(timestamp);
+        return " " + date.getHours() +
+            ":" + date.getMinutes()
+
+    }
+
 
     if (isLoading) return <p>Loading...</p>;
     if (!data) return <p>No about data</p>;
@@ -132,48 +143,44 @@ export default function Conversations() {
     return (
         <div>
             <Header />
+
             <div className={styles.conversations}>
+
                 <div className={styles.sidebar}>
                     <div className={styles.create_conversation} onClick={() => createConv(3)}>Commencer une conversation</div>
-
-
-                    {/* {data.map((d) => (
-                    <Link key={d.id} href={`/conversations/${d.id}`}>
-                        <div className={styles.conversation} >{d.senderNickname} </div>
-                    </Link>))} */}
-
                     {data.map((d) => (
-                        <div key={d.id} onClick={() => getConv(d.id, d.senderId)} >
-                            <div className={conv != null ? (conv.id != d.id ? styles.conversation : '') : styles.conversation} >
+                        <div key={d.id} onClick={() => getMessages(d.id, d.senderId)} >
+                            <div className={messages != null ? (convId !== d.id ? styles.conversation : styles.conversation_active) : styles.conversation} >
                                 {d.senderNickname}
+                                <p className={styles.date}>{getDate(d.lastMessageTimestamp)}</p>
                             </div>
-
                         </div>))}
-
-
                 </div>
 
                 <div className={styles.conversation_full}>
                     <div className={styles.conversation_info}>
-                        <h3>{sender !== null ? sender.nickname : ''}</h3>
+                        <h3> {sender !== null ? sender[0].nickname : ''}  </h3>
+                    </div>
+                    <div className={styles.conversation_messages}>
+                        {messages && sender !== null ? messages.map((m) => (
+                            <div key={m.id}  >
+                                <h3>{m.senderNickname}</h3>
+                                <div className={m.authorId == 2 ? styles.sent : styles.received} key={m.id}>{m.body}</div>
+
+                            </div>)) : ' '}
                     </div>
 
+                    <div className={styles.conversation_box}>
+                        <div className={styles.message_box} >
+                            <form onSubmit={(event) => writeMessage(event, value, 1)}>
+                                <input className={styles.message_value} value={value} placeholder='Entrez votre message' onChange={e => setValue(e.target.value)} />
+                            </form>
 
-                    {conv && sender !== null ? conv.map((d) => (
-                        <div key={d.id}  >
-
-                            <h3>{d.senderNickname}</h3>
-                            <div className={d.authorId == 2 ? styles.sent : styles.received} key={d.id}>{d.body}</div>
-
-                        </div>)) : ' '}
-
-                    <div onClick={() => writeMessage('heelo', 1)}>send message</div>
-
-
+                        </div>
+                        <div onClick={(event) => writeMessage(event, value, 1)} className={styles.message_send} >Envoyer</div>
+                    </div>
                 </div>
-
-
             </div>
-        </div>
+        </div >
     );
 }
