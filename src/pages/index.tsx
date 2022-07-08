@@ -3,6 +3,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Logo from '../assets/lbc-logo.webp'
 import styles from '../styles/Home.module.css'
+import Header from '../components/header'
+
 
 const Home: FC = () => {
   const year = new Date().getFullYear()
@@ -13,6 +15,8 @@ const Home: FC = () => {
         <title>Frontend Technical test - Leboncoin</title>
         <meta name="description" content="Frontend exercise for developpers who want to join us on leboncoin.fr"></meta>
       </Head>
+
+      <Header />
 
       <main className={styles.main}>
         <Image src={Logo} alt="Leboncoin Frontend Team" width={400} height={125} layout="fixed" />

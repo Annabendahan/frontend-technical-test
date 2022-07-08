@@ -36,14 +36,14 @@
 .description a:visited,
 .card a,
 .card a:visited {
-  color:black;
+  color: black;
   text-decoration: underline;
 }
 
 .card:hover a,
 .card:focus a,
 .card:active a {
-  color:#ec6e24;
+  color: #ec6e24;
 }
 
 .code {
@@ -51,8 +51,8 @@
   border-radius: 5px;
   padding: 0.3rem;
   font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+    monospace;
 }
 
 .grid {
@@ -65,7 +65,7 @@
 }
 
 .card {
-  margin: .5rem;
+  margin: 0.5rem;
   flex-basis: 45%;
   padding: 1.5rem;
   text-align: left;
@@ -108,4 +108,118 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.header {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -webkit-box-shadow: 0px 5px 15px 5px #cccccc;
+  box-shadow: 0px 5px 15px 5px #cccccc;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  width: 100%;
+  height: 10vh;
+}
+
+.header_left {
+  display: flex;
+  align-items: center;
+  width: 45%;
+  justify-content: space-between;
+}
+.header_right {
+  display: flex;
+  align-items: center;
+  width: 20%;
+  justify-content: space-between;
+}
+
+.header_add {
+  background: #ff6e13;
+  color: white;
+  border-radius: 3px;
+  padding: 5px 7px;
+  display: flex;
+  align-items: center;
+  width: 170px;
+  justify-content: space-between;
+}
+
+.header_search {
+  display: flex;
+  align-items: center;
+  width: 90px;
+  justify-content: space-between;
+}
+
+.header_msg {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.conversations {
+  margin: auto;
+  display: flex;
+  height: 90vh;
+}
+
+.conversations h3 {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.conversation {
+  border: 1px lightgrey solid;
+  padding: 20px;
+  background: #ececec;
+
+  margin: 0;
+}
+.conversation:hover {
+  background: lightgrey;
+  cursor: pointer;
+}
+
+.conversation_info {
+  border-bottom: 1px lightgrey solid;
+  padding: 10px 20px;
+}
+
+.conversation_full {
+  border: 1px lightgrey solid;
+  width: 70%;
+}
+
+.create_conversation {
+  border: 1px lightgrey solid;
+  padding: 20px;
+  background: #fafafa;
+  color: grey;
+}
+
+.sidebar {
+  width: 30%;
+}
+
+.sent {
+  background: blue;
+  padding: 15px;
+  border-radius: 50px;
+  color: white;
+  width: 78%;
+  margin: 20px;
+  margin-left: 20%;
+}
+
+.received {
+  background: #f0f0f0;
+  padding: 15px;
+  border-radius: 50px;
+  width: 78%;
+  margin: 20px;
+  margin-right: 20%;
 }
