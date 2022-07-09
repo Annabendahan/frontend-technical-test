@@ -315,6 +315,75 @@
       "lastMessageTimestamp": 1657328365089,
       "recipientNickname": "Elodie",
       "id": 978
+    },
+    {
+      "recipientId": 3,
+      "lastMessageTimestamp": 1657355921495,
+      "recipientNickname": "Patrick",
+      "id": 979
+    },
+    {
+      "recipientId": null,
+      "lastMessageTimestamp": 1657361625350,
+      "recipientNickname": null,
+      "id": 980
+    },
+    {
+      "recipientId": 4,
+      "lastMessageTimestamp": 1657378100025,
+      "recipientNickname": "Elodie",
+      "id": 981
+    },
+    {
+      "recipientId": 3,
+      "lastMessageTimestamp": 1657378180247,
+      "recipientNickname": "Patrick",
+      "id": 982
+    },
+    {
+      "recipientId": 3,
+      "lastMessageTimestamp": 1657378300600,
+      "recipientNickname": "Patrick",
+      "id": 983
+    },
+    {
+      "recipientId": 4,
+      "lastMessageTimestamp": 1657378389330,
+      "recipientNickname": "Elodie",
+      "id": 984
+    },
+    {
+      "recipientId": 1,
+      "lastMessageTimestamp": 1657378468472,
+      "recipientNickname": "Thibaut",
+      "id": 985
+    },
+    {
+      "recipientId": 3,
+      "lastMessageTimestamp": 1657378485333,
+      "recipientNickname": "Patrick",
+      "id": 986
+    },
+    {
+      "recipientId": 4,
+      "lastMessageTimestamp": 1657378606784,
+      "recipientNickname": "Elodie",
+      "senderId": 1,
+      "id": 987
+    },
+    {
+      "recipientId": 1,
+      "lastMessageTimestamp": 1657378789159,
+      "recipientNickname": "Thibaut",
+      "senderId": 1,
+      "id": 988
+    },
+    {
+      "recipientId": 3,
+      "lastMessageTimestamp": 1657381184454,
+      "recipientNickname": "Patrick",
+      "senderId": 1,
+      "id": 989
     }
   ],
   "messages": [
@@ -689,6 +758,51 @@
       "body": "coucou elodie",
       "userId": 1,
       "id": 72
+    },
+    {
+      "body": "salut ! ",
+      "userId": 1,
+      "id": 73
+    },
+    {
+      "body": "helo",
+      "userId": 1,
+      "id": 74
+    },
+    {
+      "body": "vv",
+      "userId": 1,
+      "id": 75
+    },
+    {
+      "body": "salut Elo ! ",
+      "userId": 1,
+      "id": 76
+    },
+    {
+      "body": "comment tu vas ? ",
+      "userId": 1,
+      "id": 77
+    },
+    {
+      "body": "salut mon gard",
+      "userId": 1,
+      "id": 78
+    },
+    {
+      "body": "salut!",
+      "userId": 1,
+      "id": 79
+    },
+    {
+      "body": "salut patrick !",
+      "userId": 1,
+      "id": 80
+    },
+    {
+      "body": "coucou ",
+      "userId": 1,
+      "id": 81
     }
   ],
   "users": [

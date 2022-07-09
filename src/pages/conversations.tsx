@@ -22,15 +22,10 @@ export default function Conversations() {
     const [convId, setConvId] = useState(null);
     const [convSenderName, setConvSenderName] = useState(null);
     const [convRecipientName, setConvRecipientName] = useState(null);
-
     const [newConvs, setNewConvs] = useState([])
     const [popup, setPopup] = useState(false)
     const [recipientId, setRecipientId] = useState(null)
     const [recipientNickname, setRecipientNickname] = useState(null)
-
-
-
-    console.log(value)
 
 
     useEffect(() => {
@@ -49,8 +44,6 @@ export default function Conversations() {
                 getMessages(data[0].id, data[0].senderId, data[0].senderNickname, data[0].recipientNickname);
                 getSender(data[0].senderId)
                 setLoading(false);
-                console.log(data[0].senderId)
-                console.log(sender)
             });
         fetch(`http://localhost:3005/users`, {
             method: 'GET',
@@ -69,13 +62,10 @@ export default function Conversations() {
             .then((res) => res.json())
             .then((data) => {
                 setUser(data);
-                console.log(data)
             });
 
 
     }, []);
-
-
 
 
     const getSender = (senderId) => {
@@ -89,10 +79,8 @@ export default function Conversations() {
             .then((data) => {
                 setSender(data);
                 setLoading(false);
-                console.log(sender)
             });
     }
-
 
 
     const getMessages = (id, senderId, senderNickname, recipientNickname) => {
@@ -112,10 +100,8 @@ export default function Conversations() {
             .then((data) => {
                 setMessages(data);
                 setLoading(false);
-                console.log(messages)
             });
     }
-
 
 
     const writeMessage = (event, value, id) => {
@@ -143,7 +129,8 @@ export default function Conversations() {
             body: JSON.stringify({
                 recipientId: recipientId,
                 lastMessageTimestamp: new Date().getTime(),
-                recipientNickname: recipientNickname
+                recipientNickname: recipientNickname,
+                senderId: userId
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -152,11 +139,9 @@ export default function Conversations() {
             .then(response => response.json())
             .then(json => console.log(json));
         const newConv = {
-            recipientId: recipientId, lastMessageTimestamp: new Date().getTime(), recipientNickname: recipientNickname
+            recipientId: recipientId, senderId: userId, lastMessageTimestamp: new Date().getTime(), recipientNickname: recipientNickname
         }
         setNewConvs(newConvs => [...newConvs, newConv])
-
-
         setPopup(false)
     }
 
@@ -175,46 +160,29 @@ export default function Conversations() {
     }
 
 
-    const getUsers = () => {
-        fetch(`http://localhost:3005/users`, {
-            method: 'GET',
-            headers: {
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setUsers(data);
-            });
-
-    }
-
-
     if (isLoading) return <p>Loading...</p>;
     if (!data) return <p>No about data</p>;
 
     return (
         <div>
             <Header />
-
-
-
+            {/* popup */}
             {popup ?
                 <div className={styles.popup_container}>
                     <div className={styles.popup_backdrop} onClick={() => setPopup(false)}></div>
-                    <div className={styles.popup} ><p>Avec qui souhaitez-vous converser ?</p>
+                    <div className={styles.popup} ><h4>Avec qui souhaitez-vous converser ?</h4>
                         {users !== null ? users.map((d) => (
                             <div onClick={() => setRecipientInfos(d.id, d.nickname)} key={d.id}>
                                 <p className={recipientId === d.id ? styles.user_chosen : ''} >{d.nickname} </p></div>)) : ''}
-                        <p className={styles.validate} onClick={() => createConv(recipientId, recipientNickname)}>Valider</p>
+                        <div className={styles.validate} onClick={() => createConv(recipientId, recipientNickname)}>Valider</div>
                     </div>
 
                 </div> : ''}
 
-
+            {/* sidebar avec conversations */}
             <div className={styles.conversations}>
-
                 <div className={styles.sidebar}>
-                    <div className={styles.create_conversation} onClick={() => setPopup(true)} >+ Commencer une conversation</div>
+                    <div className={styles.create_conversation} onClick={() => setPopup(true)} >+ Nouvelle conversation</div>
                     {newConvs.map((d) => (
                         <div key={d.id} onClick={() => getMessages(d.id, d.senderId, d.senderNickname, d.recipientNickname)}  >
                             <div className={messages != null ? (convId !== d.id ? styles.conversation : styles.conversation_active) : styles.conversation}>
@@ -232,32 +200,30 @@ export default function Conversations() {
                         </div>))}
                 </div>
 
+                {/* messages de la conversation sélectionnée*/}
                 <div className={styles.conversation_full}>
                     <div className={styles.conversation_info}>
-                        <h3> {userId === senderId ? convRecipientName : convSenderName}  </h3>
+                        <h3> {userId === senderId ? convRecipientName : convSenderName} </h3>
                     </div>
                     <div className={styles.conversation_messages}>
                         {messages && sender !== null ? messages.map((m) => (
                             <div key={m.id}  >
-                                <h3>{m.senderNickname}</h3>
                                 <div className={m.authorId == 2 ? styles.sent : styles.received} key={m.id}>{m.body}</div>
-
                             </div>)) : ' '}
 
                         {newMessages.filter(d => d.conversationId === convId).map((d) => (
                             <div key={d.id}  >
                                 <div className={styles.sent}>
                                     {d.body}</div>
-
                             </div>))}
                     </div>
 
+                    {/* écrire un message */}
                     <div className={styles.conversation_box}>
                         <div className={styles.message_box} >
                             <form onSubmit={(event) => writeMessage(event, value, 1)}>
                                 <input className={styles.message_value} value={value} placeholder='Entrez votre message' onChange={e => setValue(e.target.value)} />
                             </form>
-
                         </div>
                         <div onClick={(event) => writeMessage(event, value, 1)} className={styles.message_send} >Envoyer</div>
                     </div>

@@ -21,7 +21,7 @@ const Home: FC = () => {
       <main className={styles.main}>
         <Image src={Logo} alt="Leboncoin Frontend Team" width={300} height={95} layout="fixed" />
         <h1 className={styles.title}>
-          Welcome ! :)
+          Welcome ! Vous avez des nouveaux messages !
         </h1>
 
         <p className={styles.description}>
