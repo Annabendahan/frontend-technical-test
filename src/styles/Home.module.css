@@ -270,6 +270,8 @@
 .conversation_info {
   border-bottom: 1px lightgrey solid;
   padding: 10px 20px;
+  background: white;
+  height: 80px;
 }
 
 .conversation_full {
@@ -281,6 +283,7 @@
 
 .conversation_messages {
   height: 70%;
+  overflow-y: scroll;
 }
 
 .conversation_box {
@@ -290,6 +293,7 @@
   position: sticky;
   width: 100%;
   bottom: 0px;
+  background: white;
 }
 
 .create_conversation {
@@ -332,6 +336,14 @@
   color: grey;
   font-size: 14px;
   padding: 10px 40px;
+}
+
+.message_desactivated {
+  color: red;
+  font-size: 14px;
+  padding: 10px 40px;
+  color: lightgrey;
+  background: #f6f6f6;
 }
 
 @media screen and (max-width: 600px) {
@@ -416,4 +428,8 @@
 
 .user_chosen {
   font-weight: bold;
+}
+
+.vu {
+  height: 70px;
 }

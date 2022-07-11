@@ -9,19 +9,11 @@ import styles from '../styles/Home.module.css'
 import add from '../assets/add.svg'
 import msg from '../assets/msg.png'
 import user from '../assets/user.png'
-import { getLoggedUserId } from '../utils/getLoggedUserId'
 import { useRouter } from 'next/router'
 
 
-
-
 export default function Header() {
-
     const router = useRouter()
-
-
-
-
     return (
         <div className={styles.header}>
             <div className={styles.header_content}>
@@ -51,7 +43,6 @@ export default function Header() {
                             <Image src={msg} alt="Leboncoin Frontend Team" width={35} height={32} layout="fixed" />
                             <p>Messages</p>
                             {router.pathname === "/conversations" ? <div className={styles.header_msg_active} ></div> : ''}
-                            {console.log(router)}
                         </div>
                     </Link>
                     <div className={styles.header_user} >
